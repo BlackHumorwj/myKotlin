@@ -45,7 +45,7 @@ fun vars(vararg v: Int) {
     }
 }
 
-// 可变参数 入参只有一个
+//  入参中只有一个可变
 //fun vars1(vararg v1:Int,vararg v2:Int){
 //
 //}
@@ -168,8 +168,6 @@ fun rangeM() {
     //使用 until 函数排除结束元素
     for (i in 1 until 10) print(i) //输出 1到9 [1,10)
 
-
 }
-
 
 //endregion

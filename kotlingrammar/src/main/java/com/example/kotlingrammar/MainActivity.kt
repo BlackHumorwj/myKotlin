@@ -2,7 +2,10 @@ package com.example.kotlingrammar
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-
+/*
+https://blog.csdn.net/github_33304260/article/details/80343514
+https://www.runoob.com/kotlin/kotlin-basic-types.html
+ */
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,6 +23,8 @@ class MainActivity : AppCompatActivity() {
         var v2: Int = 10
 
         print(v2);
+
+        print(sumLambda)
 
     }
 
