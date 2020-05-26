@@ -1,4 +1,4 @@
-package com.example.kotlinAdvanced.协成
+package com.example.kotlinAdvanced
 
 import android.util.Log
 import kotlinx.coroutines.GlobalScope

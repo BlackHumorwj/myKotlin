@@ -1,4 +1,4 @@
-package com.example.kotlinAdvanced.lambda表达式
+package com.example.kotlinAdvanced
 
 /**
  * @time 2020/5/19 10:23

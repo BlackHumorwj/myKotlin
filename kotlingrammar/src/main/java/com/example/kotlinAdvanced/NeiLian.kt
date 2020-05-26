@@ -1,4 +1,4 @@
-package com.example.kotlinAdvanced.内敛函数
+package com.example.kotlinAdvanced
 
 import android.widget.TextView
 import androidx.core.content.ContextCompat
