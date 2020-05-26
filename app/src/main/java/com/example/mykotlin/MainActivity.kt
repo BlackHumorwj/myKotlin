@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.makeText
+import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        var context = this
+        val context = this
 
 
         recycler_view.layoutManager = LinearLayoutManager(this)
@@ -42,36 +43,26 @@ class MainActivity : AppCompatActivity() {
         })
 
         btn_add.setOnClickListener {
-
             var intent = Intent(context, TodoAddActivity::class.java)
-            startActivityForResult(intent, 1)
-
-
             //替换方案
-
-        }
-
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == 1) {
-                data.let {
-                    var name = it?.getStringExtra("name")
-                    var mobile = it?.getStringExtra("mobile")
-                    var address = it?.getStringExtra("address")
-                    list.add(MyBean(name, mobile, address))
-                    recycler_view.adapter?.notifyDataSetChanged()
+            val launcher: ActivityResultLauncher<Intent> =
+                registerForActivityResult(ActivityResultContracts.StartActivityForResult()
+                ) {
+                    if (it.resultCode == Activity.RESULT_OK) {
+                        val data = it.data
+                        val name = data?.getStringExtra("name")
+                        val mobile = data?.getStringExtra("mobile")
+                        val address = data?.getStringExtra("address")
+                        list.add(MyBean(name, mobile, address))
+                        recycler_view.adapter?.notifyDataSetChanged()
+                    }
                 }
-            }
+            launcher.launch(intent)
+
+
         }
 
-
-        super.onActivityResult(requestCode, resultCode, data)
     }
-
-
 }
 
 data class MyBean(val name: String?, val mobile: String?, val address: String?)
@@ -81,8 +72,8 @@ class MyAdapter(var list: ArrayList<MyBean>, private val callBack: CallBack) :
     RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
 
-    open interface CallBack {
-        open fun callBack(position: Int)
+      interface CallBack {
+          fun callBack(position: Int)
     }
 
 
@@ -101,10 +92,7 @@ class MyAdapter(var list: ArrayList<MyBean>, private val callBack: CallBack) :
         holder.itemView.setOnClickListener(View.OnClickListener {
             callBack.callBack(position)
         })
-
     }
-
-
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 
