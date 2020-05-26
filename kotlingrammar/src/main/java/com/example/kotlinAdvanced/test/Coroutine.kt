@@ -1,10 +1,14 @@
 package com.example.kotlinAdvanced.test
 
 import android.util.Log
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
 
 
 /**
+ * https://mp.weixin.qq.com/s/N5mCacpoxGIvS_ASDAiQDQ
  * @time 2020/5/22 12:06
  * @desc
  */
