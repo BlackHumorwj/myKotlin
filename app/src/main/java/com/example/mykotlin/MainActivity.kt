@@ -18,6 +18,9 @@ import com.example.mykotlin.MyAdapter.CallBack
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_todo_list.view.*
 
+//fun Toast.myToast(context: Context, toast: String) {
+//    makeText(context, toast, Toast.LENGTH_LONG).show()
+//}
 fun myToast(context: Context, toast: String) {
     makeText(context, toast, Toast.LENGTH_LONG).show()
 }
@@ -37,23 +40,31 @@ class MainActivity : AppCompatActivity() {
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.adapter = MyAdapter(list, object : CallBack {
             override fun callBack(position: Int) {
-                myToast(context, position.toString())
+              myToast(context, position.toString())
             }
         })
 
         btn_add.setOnClickListener {
+
             var intent = Intent(context, TodoAddActivity::class.java)
-            //替换方案
+
+            //Activity 跳转替换方案
             val launcher: ActivityResultLauncher<Intent> =
-                registerForActivityResult(ActivityResultContracts.StartActivityForResult()
+                registerForActivityResult(
+                    ActivityResultContracts.StartActivityForResult()
                 ) {
                     if (it.resultCode == Activity.RESULT_OK) {
-                        val data = it.data
-                        val name = data?.getStringExtra("name")
-                        val mobile = data?.getStringExtra("mobile")
-                        val address = data?.getStringExtra("address")
-                        list.add(MyBean(name, mobile, address))
-                        recycler_view.adapter?.notifyDataSetChanged()
+
+                        //run 内敛函数
+                        it.data?.run {
+                            val name = getStringExtra("name")
+                            val mobile = getStringExtra("mobile")
+                            val address = getStringExtra("address")
+                            list.add(MyBean(name, mobile, address))
+                            recycler_view.adapter?.notifyDataSetChanged()
+                        }
+
+
                     }
                 }
             launcher.launch(intent)
@@ -71,8 +82,8 @@ class MyAdapter(var list: ArrayList<MyBean>, private val callBack: CallBack) :
     RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
 
-      interface CallBack {
-          fun callBack(position: Int)
+    interface CallBack {
+        fun callBack(position: Int)
     }
 
 
@@ -92,6 +103,7 @@ class MyAdapter(var list: ArrayList<MyBean>, private val callBack: CallBack) :
             callBack.callBack(position)
         })
     }
+
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 

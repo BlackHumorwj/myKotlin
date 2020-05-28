@@ -4,6 +4,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.example.AppData
 import com.example.kotlingrammar.R
+import org.w3c.dom.Text
 
 /**
  * @time 2020/5/26 11:28
@@ -31,6 +32,18 @@ fun mWith(textView: TextView) {
         setTextColor(ContextCompat.getColor(AppData.getContext(), R.color.colorAccent))
     }
 
+
+}
+
+// let 和 with 内敛函数的结合
+fun mRun(textView: TextView){
+
+    var tvName:TextView? = null
+
+
+    tvName?.run {
+        setText("哈哈")
+    }
 
 }
 

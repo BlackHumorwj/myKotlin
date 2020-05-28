@@ -54,6 +54,7 @@ fun m303(x: String) {
     }
 
     var items = setOf("apple", "banana", "kiwi")
+
     when {
         "aa" in items -> println(true)
         "bb" in items -> println("什么鬼")

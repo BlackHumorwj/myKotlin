@@ -1,3 +1,4 @@
 rootProject.name='myKotlin'
 include ':app'
 include ':kotlingrammar'
+include ':lib'

@@ -22,3 +22,7 @@ fun m401() {
 
 
 }
+
+fun main(any: Array<String>){
+    print("hhhh")
+}
