@@ -38,7 +38,7 @@ fun printSum1(a: Int, b: Int) {
 //endregion
 
 //region 2、可变参数函数
-// 函数的变长参数可以用 vararg 关键字进行标识
+// 函数的可变参数可以用 vararg 关键字进行标识
 fun vars(vararg v: Int) {
     for (vt in v) {
         println(vt)

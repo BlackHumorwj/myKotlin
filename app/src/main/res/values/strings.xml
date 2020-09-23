@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">myKotlin</string>
+    <string name="shortcut_fail">myKotlin</string>
+    <string name="shortcut_short">记一笔支出</string>
+    <string name="shortcut_long">记一笔收入</string>
 </resources>

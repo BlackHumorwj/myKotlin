@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutDisabledMessage="@string/shortcut_fail"
+        android:shortcutId="shortcutId1"
+        android:shortcutLongLabel="@string/shortcut_long"
+        android:shortcutShortLabel="@string/shortcut_short">
+        <intent
+            android:action="action1"
+            android:data="someThing"
+
+            android:targetClass="com.example.mykotlin.TodoAddActivity"
+            android:targetPackage="com.example.mykotlin"/>
+    </shortcut>
+
+
+</shortcuts>
