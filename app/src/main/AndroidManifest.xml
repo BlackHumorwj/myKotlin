@@ -23,6 +23,7 @@
 
         </activity>
         <activity android:name=".TodoAddActivity" />
+        <activity android:name=".ui.weather.WeatherHomeActivity" />
     </application>
 
 </manifest>

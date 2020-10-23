@@ -15,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mykotlin.MyAdapter.CallBack
+import com.example.mykotlin.ui.weather.WeatherHomeActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_todo_list.view.*
 
@@ -40,14 +41,13 @@ class MainActivity : AppCompatActivity() {
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.adapter = MyAdapter(list, object : CallBack {
             override fun callBack(position: Int) {
-              myToast(context, position.toString())
+                myToast(context, position.toString())
             }
         })
 
         btn_add.setOnClickListener {
 
             var intent = Intent(context, TodoAddActivity::class.java)
-
             //Activity 跳转替换方案
             val launcher: ActivityResultLauncher<Intent> =
                 registerForActivityResult(
@@ -68,7 +68,12 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             launcher.launch(intent)
+        }
 
+        btn_test.setOnClickListener {
+            when (it.id) {
+                R.id.btn_test -> startActivity(WeatherHomeActivity.newInstance(this))
+            }
 
         }
 
