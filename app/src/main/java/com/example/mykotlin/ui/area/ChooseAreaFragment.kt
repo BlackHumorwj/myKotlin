@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mykotlin.R
+import com.example.mykotlin.data.network.CoolWeatherNetwork
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -19,7 +21,27 @@ class ChooseAreaFragment : Fragment() {
     private val mList: List<String> by lazy { ArrayList<String>() }
 
     private val viewModel by lazy {
-        ViewModelProvider(this)[ChooseAreaViewModel::class.java]
+        ViewModelProvider(this,object :ViewModelProvider.Factory{
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                if (modelClass.isAssignableFrom(ChooseAreaViewModel::class.java)){
+                    return ChooseAreaViewModel(AreaRepository(CoolWeatherNetwork.getInstance())) as T
+                }
+                throw  IllegalArgumentException(" unKnown ViewModel class ")
+            }
+
+        })[ChooseAreaViewModel::class.java]
+    }
+
+    companion object {
+
+        fun newInstance(): ChooseAreaFragment {
+            val args = Bundle()
+            val fragment = ChooseAreaFragment()
+            fragment.arguments = args
+            return fragment
+        }
+
+
     }
 
 
@@ -41,12 +63,7 @@ class ChooseAreaFragment : Fragment() {
     }
 
     private fun initEvent() {
-
-        viewModel.getProvines()
-
-
-
-
+        viewModel.getProvinces()
 
     }
 

@@ -12,6 +12,6 @@ import retrofit2.http.GET
 interface AreaService {
 
     @GET("api/china")
-    fun getProvices(): Call<MutableList<Province>>
+    fun getProvinces(): Call<MutableList<Province>>
 
 }

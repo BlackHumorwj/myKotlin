@@ -1,6 +1,5 @@
 package com.example.mykotlin.ui.area
 
-import com.example.mykotlin.data.model.area.Province
 import com.example.mykotlin.data.network.CoolWeatherNetwork
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -14,7 +13,7 @@ class AreaRepository(val netWork: CoolWeatherNetwork) {
 
     suspend fun getProvices() = withContext(Dispatchers.IO) {
 
-        var list = netWork.getProviceList()
+        var list = netWork.getProvinceList()
 
         list
     }

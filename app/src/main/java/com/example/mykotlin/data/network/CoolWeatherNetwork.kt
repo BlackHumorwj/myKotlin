@@ -16,7 +16,7 @@ class CoolWeatherNetwork {
     private val placeService = ServiceCreator.create(AreaService::class.java)
 
 
-    suspend fun getProviceList() = placeService.getProvices().await()
+    suspend fun getProvinceList() = placeService.getProvinces().await()
 
 
     private suspend fun <T> Call<T>.await(): T {
@@ -38,6 +38,24 @@ class CoolWeatherNetwork {
 
             })
         }
+    }
+
+
+    companion object {
+
+        private var network: CoolWeatherNetwork? = null
+
+        fun getInstance(): CoolWeatherNetwork {
+            if (network == null) {
+                synchronized(CoolWeatherNetwork::class.java) {
+                    if (network == null) {
+                        network = CoolWeatherNetwork()
+                    }
+                }
+            }
+            return network!!
+        }
+
 
     }
 
