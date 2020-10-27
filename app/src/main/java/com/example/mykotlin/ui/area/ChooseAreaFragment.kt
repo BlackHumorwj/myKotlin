@@ -50,6 +50,7 @@ class ChooseAreaFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         return LayoutInflater.from(context).inflate(R.layout.fragment_choose_area, container, false)
     }
 
