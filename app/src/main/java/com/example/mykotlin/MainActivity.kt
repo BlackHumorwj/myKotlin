@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
 
         btn_test.setOnClickListener {
             when (it.id) {
-                R.id.btn_test -> startActivity(WeatherHomeActivity.newInstance(this))
+                R.id.btn_test -> startActivity(WeatherHomeActivity.newInstance(this, ""))
             }
 
         }

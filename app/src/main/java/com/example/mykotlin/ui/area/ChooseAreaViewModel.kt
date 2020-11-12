@@ -1,13 +1,11 @@
 package com.example.mykotlin.ui.area
 
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mykotlin.data.model.area.City
 import com.example.mykotlin.data.model.area.County
 import com.example.mykotlin.data.model.area.Province
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 /**
@@ -25,15 +23,17 @@ class ChooseAreaViewModel(private val repository: AreaRepository) : ViewModel() 
     var areaSelected = MutableLiveData<Boolean>()
 
     var selectedProvince: Province? = null
+
     var selectedCity: City? = null
+
     var selectedCounty: County? = null
 
 
     lateinit var provices: MutableList<Province>
 
-    lateinit var city: MutableLiveData<City>
+    lateinit var cities: MutableList<City>
 
-    lateinit var counties: MutableLiveData<County>
+    lateinit var counties: MutableList<County>
 
     val dataList = ArrayList<String>()
 
@@ -43,16 +43,71 @@ class ChooseAreaViewModel(private val repository: AreaRepository) : ViewModel() 
     }
 
 
+    /**
+     * 获取 省份
+     */
     fun getProvinces() {
-
+        currentLevel.value = ChooseAreaFragment.LEVEL_PROVINCE
         launch {
-            provices = repository.getProvices()
+            provices = repository.getProvinces()
 
             dataList.addAll(provices.map { it.name })
         }
-
-
     }
+
+    /**
+     * 获取 城市
+     */
+    private fun getCities() {
+        selectedProvince?.let {
+            currentLevel.value = ChooseAreaFragment.LEVEL_CITY
+            launch {
+                cities = repository.getCities(it.id)
+
+                dataList.addAll(cities.map { it.cityName })
+
+            }
+        }
+    }
+
+    /**
+     * 获取 区/县
+     */
+    private fun getCounties() {
+        selectedCity?.let {
+            currentLevel.value = ChooseAreaFragment.LEVEL_COUNTY
+            launch {
+                counties = repository.getCounties(it.provinceId, it.cityCode)
+
+                dataList.addAll(counties.map { it.countyName })
+            }
+        }
+    }
+
+
+    fun onItemClick(position: Int) {
+        when {
+            currentLevel.value == ChooseAreaFragment.LEVEL_PROVINCE -> {
+                selectedProvince = provices[position]
+                //获取城市
+                getCities()
+            }
+
+            currentLevel.value == ChooseAreaFragment.LEVEL_CITY -> {
+                //获取 区/县天气信息
+                selectedCity = cities[position]
+                getCounties()
+            }
+
+            currentLevel.value == ChooseAreaFragment.LEVEL_COUNTY -> {
+                selectedCounty = counties[position]
+                areaSelected.value = true
+
+            }
+
+        }
+    }
+
 
     /**
      * 入参是个函数
@@ -66,7 +121,6 @@ class ChooseAreaViewModel(private val repository: AreaRepository) : ViewModel() 
             isLoading.value = false
         } catch (t: Throwable) {
             t.printStackTrace()
-            //Toast.makeText(CoolWeatherApplication.context, t.message, Toast.LENGTH_SHORT).show()
             dataChanged.value = dataChanged.value?.plus(1)
             isLoading.value = false
         }

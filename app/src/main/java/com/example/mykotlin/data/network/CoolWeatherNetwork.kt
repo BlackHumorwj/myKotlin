@@ -1,6 +1,5 @@
 package com.example.mykotlin.data.network
 
-import android.util.Log
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -14,10 +13,25 @@ import kotlin.coroutines.suspendCoroutine
  * @time 2020/10/23 17:21
  */
 class CoolWeatherNetwork {
+
     private val placeService = ServiceCreator.create(AreaService::class.java)
 
-
     suspend fun getProvinceList() = placeService.getProvinces().await()
+
+
+    suspend fun getCities(provinceId: String) = placeService.getCities(provinceId).await()
+
+
+    suspend fun getCounties(provinceId: String, cityCode: Int) =
+        placeService.getCounties(provinceId, cityCode).await()
+
+
+    //天气相关Service
+    private val weatherService = ServiceCreator.create(WeatherService::class.java)
+
+    suspend fun getWeather(weatherId: String) = weatherService.getWeather(weatherId).await()
+
+    suspend fun getBigPic() = weatherService.getBigPic().await()
 
 
     private suspend fun <T> Call<T>.await(): T {

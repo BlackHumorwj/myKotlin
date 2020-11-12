@@ -25,7 +25,8 @@
 
         </activity>
         <activity android:name=".TodoAddActivity" />
-        <activity android:name=".ui.weather.WeatherHomeActivity" />
+        <activity android:name=".ui.weather.WeatherHomeActivity"
+            android:launchMode="singleTask" />
     </application>
 
 </manifest>
