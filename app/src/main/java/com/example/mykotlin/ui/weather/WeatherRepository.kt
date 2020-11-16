@@ -1,7 +1,8 @@
 package com.example.mykotlin.ui.weather
 
-import androidx.lifecycle.MutableLiveData
-import com.example.mykotlin.data.model.area.County
+import android.content.Context
+import androidx.core.content.edit
+import com.example.mykotlin.AppData
 import com.example.mykotlin.data.network.CoolWeatherNetwork
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -21,9 +22,22 @@ class WeatherRepository(private val netWork: CoolWeatherNetwork) {
 
     }
 
-    suspend fun getBigPic( ) = withContext(Dispatchers.IO) {
-        var url = netWork.getBigPic( )
+    suspend fun getBigPic() = withContext(Dispatchers.IO) {
+        var url = netWork.getBigPic()
         url
     }
+
+    fun setWeatherCached(weatherId: String?) {
+        val sharedPreferences = AppData.context?.getSharedPreferences("cache", Context.MODE_PRIVATE)
+        sharedPreferences?.edit()?.putString("weatherId", weatherId)?.apply()
+    }
+
+    fun getWeatherCached(): String? {
+        val sharedPreferences = AppData.context?.getSharedPreferences("cache", Context.MODE_PRIVATE)
+        return sharedPreferences?.getString("weatherId", "")
+    }
+
+
+    fun isWeatherCached() = getWeatherCached() != null
 
 }

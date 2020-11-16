@@ -28,9 +28,7 @@ class ChooseAreaAdapter(private val context: Context, private val list: List<Str
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
         val view = LayoutInflater.from(context).inflate(R.layout.item_choose_area, parent, false);
-
         return Holder(view)
     }
 

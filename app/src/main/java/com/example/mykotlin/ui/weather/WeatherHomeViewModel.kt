@@ -1,9 +1,11 @@
 package com.example.mykotlin.ui.weather
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.coolweather.coolweatherjetpack.data.model.weather.Weather
+import com.example.mykotlin.AppData
 import kotlinx.coroutines.launch
 
 /**
@@ -55,5 +57,14 @@ class WeatherHomeViewModel(private val weatherRepository: WeatherRepository) : V
                 error(e)
             }
         }
+
+    fun setWeatherCached(weatherId: String?) {
+        weatherRepository.setWeatherCached(weatherId)
+    }
+
+    fun getWeatherCached() = weatherRepository.getWeatherCached()
+
+
+    fun isWeatherCached() = weatherRepository.isWeatherCached()
 
 }
