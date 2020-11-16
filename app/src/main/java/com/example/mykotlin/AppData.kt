@@ -23,4 +23,8 @@ class AppData : Application() {
     }
 
 
+    /**
+     * 1、缓存
+     */
+
 }

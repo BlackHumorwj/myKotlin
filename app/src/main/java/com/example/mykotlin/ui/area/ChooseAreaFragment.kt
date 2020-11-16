@@ -13,10 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mykotlin.MainActivity
 import com.example.mykotlin.R
 import com.example.mykotlin.data.network.CoolWeatherNetwork
+import com.example.mykotlin.ext.onClick
 import com.example.mykotlin.ui.area.ChooseAreaAdapter.CallBack
 import com.example.mykotlin.ui.weather.WeatherHomeActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.recycler_view
 import kotlinx.android.synthetic.main.activity_weather_home.*
+import kotlinx.android.synthetic.main.fragment_choose_area.*
 
 /**
  * @author : kingBoy
@@ -84,6 +87,27 @@ class ChooseAreaFragment : Fragment() {
             mAdapter.notifyDataSetChanged()
         })
 
+
+        viewModel.currentLevel.observe(viewLifecycleOwner, Observer {level->
+            when(level){
+                LEVEL_PROVINCE->{
+                    titleText.text = "中国"
+                    backButton.visibility = View.GONE
+                }
+                LEVEL_CITY->{
+                    titleText.text = viewModel.selectedProvince?.name
+                    backButton.visibility = View.VISIBLE
+                }
+                LEVEL_COUNTY->{
+                    titleText.text = viewModel.selectedCity?.cityName
+                    backButton.visibility = View.VISIBLE
+                }
+            }
+
+        })
+
+
+
         viewModel.areaSelected.observe(viewLifecycleOwner, Observer {
             if (it && viewModel.selectedCounty != null) {
                 var intent = WeatherHomeActivity.newInstance(activity,viewModel.selectedCounty!!.weatherId)
@@ -104,6 +128,14 @@ class ChooseAreaFragment : Fragment() {
                 viewModel.onItemClick(item)
             }
         })
+
+        backButton.onClick {
+            //返回
+            viewModel.onBack()
+
+        }
+
+
     }
 
 

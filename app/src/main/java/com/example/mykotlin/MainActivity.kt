@@ -63,8 +63,6 @@ class MainActivity : AppCompatActivity() {
                             list.add(MyBean(name, mobile, address))
                             recycler_view.adapter?.notifyDataSetChanged()
                         }
-
-
                     }
                 }
             launcher.launch(intent)
@@ -85,7 +83,6 @@ data class MyBean(val name: String?, val mobile: String?, val address: String?)
 
 class MyAdapter(var list: ArrayList<MyBean>, private val callBack: CallBack) :
     RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
-
 
     interface CallBack {
         fun callBack(position: Int)

@@ -86,27 +86,39 @@ class ChooseAreaViewModel(private val repository: AreaRepository) : ViewModel() 
 
 
     fun onItemClick(position: Int) {
-        when {
-            currentLevel.value == ChooseAreaFragment.LEVEL_PROVINCE -> {
+        when (currentLevel.value) {
+            ChooseAreaFragment.LEVEL_PROVINCE -> {
                 selectedProvince = provices[position]
                 //获取城市
                 getCities()
             }
-
-            currentLevel.value == ChooseAreaFragment.LEVEL_CITY -> {
+            ChooseAreaFragment.LEVEL_CITY -> {
                 //获取 区/县天气信息
                 selectedCity = cities[position]
                 getCounties()
             }
-
-            currentLevel.value == ChooseAreaFragment.LEVEL_COUNTY -> {
+            ChooseAreaFragment.LEVEL_COUNTY -> {
                 selectedCounty = counties[position]
                 areaSelected.value = true
 
             }
-
         }
     }
+
+
+    fun onBack() {
+
+        when (currentLevel.value) {
+            ChooseAreaFragment.LEVEL_COUNTY -> {
+                getCities()
+            }
+            ChooseAreaFragment.LEVEL_CITY -> {
+                getProvinces()
+            }
+        }
+
+    }
+
 
 
     /**
@@ -125,6 +137,8 @@ class ChooseAreaViewModel(private val repository: AreaRepository) : ViewModel() 
             isLoading.value = false
         }
     }
+
+
 
 
 }
