@@ -33,19 +33,19 @@ class WeatherHomeViewModel(private val weatherRepository: WeatherRepository) : V
         }, {
 
         })
+
+        getBingPic(false)
+
     }
 
 
     fun getBingPic(refresh: Boolean) {
-
         launch({
             bingPic.value = weatherRepository.getBigPic()
 
         }, {
 
         })
-
-
     }
 
 

@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.mykotlin.R
 import com.example.mykotlin.data.network.CoolWeatherNetwork
 import com.example.mykotlin.ext.onClick
@@ -25,7 +26,6 @@ import kotlinx.android.synthetic.main.forecast_item.view.*
 class WeatherHomeActivity : AppCompatActivity() {
 
     var context: Context? = null
-
 
     companion object {
         fun newInstance(context: Context?, weatherId: String): Intent {
@@ -67,11 +67,10 @@ class WeatherHomeActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-
         if (viewModel.isWeatherCached()) {
             viewModel.weatherId = viewModel.getWeatherCached().toString()
             viewModel.getWeather()
-        }else{
+        } else {
             drawerLayout.openDrawer(Gravity.LEFT)
         }
     }
@@ -105,6 +104,10 @@ class WeatherHomeActivity : AppCompatActivity() {
             carWashText.text = it.suggestion.carWash.info
             sportText.text = it.suggestion.sport.info
 
+        })
+
+        viewModel.bingPic.observe(this, Observer {
+            Glide.with(context).load(it).into(iv_bg)
         })
 
 
